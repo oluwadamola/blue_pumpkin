@@ -9,6 +9,8 @@ import com.bluepumpkin.dao.UserDaoLocal;
 import com.bluepumpkin.entity.User;
 import java.io.IOException;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserServlet extends HttpServlet {
    @EJB
    UserDaoLocal userdao;
+   RequestDispatcher rd;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,8 +42,14 @@ public class UserServlet extends HttpServlet {
         String phoneNumber = request.getParameter("phoneNumber");
         
         User user = new User(firstName, lastName, email, phoneNumber, password);
-        userdao.addUser(user);
-
+        if(userdao.getUserByEmail(email) == null){
+            userdao.addUser(user);
+        }
+        else{         
+            request.setAttribute("email_taken", "Email is already taken");
+            rd = request.getRequestDispatcher("createuser.jsp");
+            rd.forward(request, response);
+        }
        
     }
 

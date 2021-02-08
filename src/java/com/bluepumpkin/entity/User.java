@@ -22,11 +22,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="users")
-@NamedQueries(@NamedQuery(name = "User.all", query = "SELECT u FROM User u"))
+@NamedQueries({
+        @NamedQuery(name = "User.all", query="SELECT u FROM User u"),
+        @NamedQuery(name ="User.findByEmail", query="SELECT u from User u where u.email = :email ")
+})
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String userId;
+    private int userId;
     @Column(nullable = false, length = 25)
     private String firstName;
     @Column(nullable = false, length = 25)
@@ -46,17 +49,16 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.password = password;
     }
-    
-    
-    
-    public String getUserId() {
+
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
-
+    
+    
     public String getFirstName() {
         return firstName;
     }

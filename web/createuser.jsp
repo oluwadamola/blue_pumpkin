@@ -20,6 +20,7 @@
             <h3 class="tile-title">User Registration</h3>
             <div class="tile-body">
             <form method="post" action="UserServlet">
+                <h4 style="color:red">${email_taken}</h4>
                 <div class="form-group">
                   <label class="control-label">First Name</label>
                   <input class="form-control" type="text" placeholder="Enter full name" name="firstName">
@@ -38,14 +39,14 @@
                 </div>
                 <div class="form-group">
                   <label class="control-label">Phone Number</label>
-                  <input class="form-control" type="tel" placeholder="Enter phonenumber" name="phonenumber" >
+                  <input class="form-control" type="tel" placeholder="Enter phonenumber" name="phoneNumber" >
                 </div>
                 <div class="form-group">
                   <label class="control-label">Address</label>
                   <textarea class="form-control" rows="4" placeholder="Enter your address"></textarea>
                 </div>
                 <div class="tile-footer">
-                    <button class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="#"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+                    <input type="submit" class="btn btn-primary" value="Register"/>
                 </div>
             </form>
             </div>

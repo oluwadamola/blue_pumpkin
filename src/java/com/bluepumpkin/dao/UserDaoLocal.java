@@ -18,6 +18,7 @@ public interface UserDaoLocal {
     void addUser(User user);
     User getUser(int userId);
     List<User> getUsers();
+    User getUserByEmail(String email);
     void deleteUser(int userId);
     void updateUser(User user); 
 }

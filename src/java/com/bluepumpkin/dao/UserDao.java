@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -30,7 +31,11 @@ public class UserDao implements UserDaoLocal {
     public User getUser(int userId) {
         return em.find(User.class, userId);
     }
-
+    @Override
+    public User getUserByEmail(String email){
+        TypedQuery<User> query = em.createNamedQuery("User.findByEmail", User.class);
+        return query.setParameter("email", email).getSingleResult();        
+    }
     @Override
     public List<User> getUsers() {
         return em.createNamedQuery("User.all").getResultList();
