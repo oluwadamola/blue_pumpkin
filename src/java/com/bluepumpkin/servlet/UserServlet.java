@@ -8,6 +8,7 @@ package com.bluepumpkin.servlet;
 import com.bluepumpkin.dao.UserDaoLocal;
 import com.bluepumpkin.entity.User;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -24,17 +25,9 @@ public class UserServlet extends HttpServlet {
    @EJB
    UserDaoLocal userdao;
    RequestDispatcher rd;
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
@@ -42,14 +35,32 @@ public class UserServlet extends HttpServlet {
         String phoneNumber = request.getParameter("phoneNumber");
         
         User user = new User(firstName, lastName, email, phoneNumber, password);
-        if(userdao.getUserByEmail(email) == null){
-            userdao.addUser(user);
-        }
-        else{         
-            request.setAttribute("email_taken", "Email is already taken");
-            rd = request.getRequestDispatcher("createuser.jsp");
-            rd.forward(request, response);
-        }
+        List<User> users;
+        switch(action){
+            case "addUser":
+                if(userdao.getUserByEmail(email) == null){
+                    userdao.addUser(user);
+                    users = userdao.getUsers();
+                    rd = request.getRequestDispatcher("userlist.jsp");
+                    request.setAttribute("users", users);
+                    request.setAttribute("usercount", users.size());
+                    rd.forward(request, response);
+                }
+                else{         
+                    request.setAttribute("email_taken", "Email is already taken");
+                    rd = request.getRequestDispatcher("createuser.jsp");
+                    rd.forward(request, response);
+                }
+                break;
+                
+            case "getUsers":
+                users = userdao.getUsers();
+                request.setAttribute("users", users);
+                request.getRequestDispatcher("userlist.jsp").forward(request, response);
+                break;
+            default:
+                break;
+       }
        
     }
 

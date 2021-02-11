@@ -21,4 +21,5 @@ public interface UserDaoLocal {
     User getUserByEmail(String email);
     void deleteUser(int userId);
     void updateUser(User user); 
+    int count();
 }

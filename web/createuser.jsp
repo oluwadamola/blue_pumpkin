@@ -19,8 +19,8 @@
           <div class="tile">
             <h3 class="tile-title">User Registration</h3>
             <div class="tile-body">
-            <form method="post" action="UserServlet">
-                <h4 style="color:red">${email_taken}</h4>
+            <form method="post" action="UserServlet?action=addUser">
+                <h4 class="text text-danger">${email_taken}</h4>
                 <div class="form-group">
                   <label class="control-label">First Name</label>
                   <input class="form-control" type="text" placeholder="Enter full name" name="firstName">

@@ -9,6 +9,7 @@ import com.bluepumpkin.entity.User;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -33,8 +34,13 @@ public class UserDao implements UserDaoLocal {
     }
     @Override
     public User getUserByEmail(String email){
-        TypedQuery<User> query = em.createNamedQuery("User.findByEmail", User.class);
-        return query.setParameter("email", email).getSingleResult();        
+        try{
+            TypedQuery<User> query = em.createNamedQuery("User.findByEmail", User.class);
+            return query.setParameter("email", email).getSingleResult();
+         }
+        catch(NoResultException e) {
+            return null;
+        }        
     }
     @Override
     public List<User> getUsers() {
@@ -49,5 +55,8 @@ public class UserDao implements UserDaoLocal {
         em.merge(user);
     }
    
-    
+    @Override
+    public int count(){
+        return getUsers().size();
+    }
 }
