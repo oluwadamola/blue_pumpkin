@@ -19,7 +19,7 @@
           <div class="tile">
             <h3 class="tile-title">User Registration</h3>
             <div class="tile-body">
-            <form method="post" action="UserServlet?action=addUser">
+            <form method="post" action="UserServlet/add">
                 <h4 class="text text-danger">${email_taken}</h4>
                 <div class="form-group">
                   <label class="control-label">First Name</label>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-group">
                   <label class="control-label">Password</label>
-                  <input class="form-control" type="password" placeholder="Enter email address" name="password">
+                  <input class="form-control" type="password" placeholder="Enter password" name="password">
                 </div>
                 <div class="form-group">
                   <label class="control-label">Phone Number</label>

@@ -57,7 +57,11 @@
                       <td>${user.firstName}</td>
                       <td>${user.lastName}</td>
                       <td>${user.email}</td>
-                      <td>${user.phoneNumber}</td>
+                      <td>
+                          <a class="text text-info" href="${pageContext.request.contextPath}/edit?id=<c:out value='${user.userId}' />">Edit</a>
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          <a class="text text-danger" href="${pageContext.request.contextPath}/delete?id=<c:out value='${user.userId}' />">Delete</a>                     
+                      </td>
                     </tr>
                 </c:forEach>
               </tbody>
@@ -66,5 +70,5 @@
         </div>
        </main>
     </body>
-<%@include file="footer.jsp"  %>
+<%@include file="header.jsp" %>
     

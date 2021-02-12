@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +28,7 @@ public class UserServlet extends HttpServlet {
    RequestDispatcher rd;
    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
+        String action = request.getServletPath();
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
@@ -36,32 +37,43 @@ public class UserServlet extends HttpServlet {
         
         User user = new User(firstName, lastName, email, phoneNumber, password);
         List<User> users;
+        users = userdao.getUsers();
         switch(action){
-            case "addUser":
+            case "/UserServlet/add":
                 if(userdao.getUserByEmail(email) == null){
                     userdao.addUser(user);
                     users = userdao.getUsers();
-                    rd = request.getRequestDispatcher("userlist.jsp");
+                    rd = request.getRequestDispatcher("/userlist.jsp");                    
                     request.setAttribute("users", users);
                     request.setAttribute("usercount", users.size());
                     rd.forward(request, response);
                 }
                 else{         
                     request.setAttribute("email_taken", "Email is already taken");
-                    rd = request.getRequestDispatcher("createuser.jsp");
+                    rd = request.getRequestDispatcher("/createuser.jsp");
                     rd.forward(request, response);
                 }
                 break;
                 
-            case "getUsers":
-                users = userdao.getUsers();
+            case "/UserServlet/update":
+                userdao.updateUser(user);
+                request.setAttribute("users", users);
+                request.getRequestDispatcher("/userlist.jsp").forward(request, response);
+                break;
+            case "/delete":
+                int userId = Integer.parseInt(request.getParameter("userId"));
+                userdao.deleteUser(userId);
                 request.setAttribute("users", users);
                 request.getRequestDispatcher("userlist.jsp").forward(request, response);
                 break;
             default:
+                users = userdao.getUsers();
+                rd = request.getRequestDispatcher("userlist.jsp");
+                request.setAttribute("users", users);
+                request.setAttribute("usercount", users.size());
+                rd.forward(request, response);
                 break;
        }
-       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
