@@ -47,8 +47,9 @@ public class UserDao implements UserDaoLocal {
         return em.createNamedQuery("User.all").getResultList();
     }
     @Override
-    public void deleteUser(int userId){
-        em.remove(userId);
+    public void deleteUser(User user){
+        if(em.contains(user))
+            em.remove(user);
     }
     @Override
     public void updateUser(User user) {

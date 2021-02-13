@@ -19,7 +19,7 @@ public interface UserDaoLocal {
     User getUser(int userId);
     List<User> getUsers();
     User getUserByEmail(String email);
-    void deleteUser(int userId);
+    void deleteUser(User user);
     void updateUser(User user); 
     int count();
 }

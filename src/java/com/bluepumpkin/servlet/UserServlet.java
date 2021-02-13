@@ -11,9 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,54 +24,75 @@ public class UserServlet extends HttpServlet {
    @EJB
    UserDaoLocal userdao;
    RequestDispatcher rd;
+   User user;
+   List<User> users;
    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath();
+        String action = request.getServletPath();    
+        switch(action){
+            case "/UserServlet/add":
+                 insertUser(request, response);
+                 break;                
+            case "/UserServlet/update":
+                updateUser(request,response);
+                break;
+            case "/UserServlet/delete":
+                deleteUser(request, response);
+                break;
+            default:
+                listUser(request, response);
+                break;
+       }
+    }
+
+    private void listUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        users = userdao.getUsers();
+        request.setAttribute("users", users);
+        request.setAttribute("usercount", users.size());
+        rd = request.getRequestDispatcher("userlist.jsp");
+        rd.forward(request, response);
+    }
+
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ServletException, IOException {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        user = userdao.getUser(userId);
+        userdao.deleteUser(user);
+        request.setAttribute("users", users);
+        request.getRequestDispatcher("userlist.jsp").forward(request, response);
+    }
+
+    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String phoneNumber = request.getParameter("phoneNumber");
-        
-        User user = new User(firstName, lastName, email, phoneNumber, password);
-        List<User> users;
-        users = userdao.getUsers();
-        switch(action){
-            case "/UserServlet/add":
-                if(userdao.getUserByEmail(email) == null){
-                    userdao.addUser(user);
-                    users = userdao.getUsers();
-                    rd = request.getRequestDispatcher("/userlist.jsp");                    
-                    request.setAttribute("users", users);
-                    request.setAttribute("usercount", users.size());
-                    rd.forward(request, response);
-                }
-                else{         
-                    request.setAttribute("email_taken", "Email is already taken");
-                    rd = request.getRequestDispatcher("/createuser.jsp");
-                    rd.forward(request, response);
-                }
-                break;
-                
-            case "/UserServlet/update":
-                userdao.updateUser(user);
-                request.setAttribute("users", users);
-                request.getRequestDispatcher("/userlist.jsp").forward(request, response);
-                break;
-            case "/delete":
-                int userId = Integer.parseInt(request.getParameter("userId"));
-                userdao.deleteUser(userId);
-                request.setAttribute("users", users);
-                request.getRequestDispatcher("userlist.jsp").forward(request, response);
-                break;
-            default:
-                users = userdao.getUsers();
-                rd = request.getRequestDispatcher("userlist.jsp");
-                request.setAttribute("users", users);
-                request.setAttribute("usercount", users.size());
-                rd.forward(request, response);
-                break;
-       }
+        user = new User(firstName, lastName, email, phoneNumber, password);
+        userdao.updateUser(user);
+        request.setAttribute("users", users);
+        request.getRequestDispatcher("/userlist.jsp").forward(request, response);
+    }
+
+    private void insertUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String phoneNumber = request.getParameter("phoneNumber"); 
+        user = new User(firstName, lastName, email, phoneNumber, password);
+        if(userdao.getUserByEmail(email) == null){
+            userdao.addUser(user);
+            users = userdao.getUsers();
+            rd = request.getRequestDispatcher("/userlist.jsp");
+            request.setAttribute("users", users);
+            request.setAttribute("usercount", users.size());
+            rd.forward(request, response);
+        }
+        else{
+            request.setAttribute("email_taken", "Email is already taken");
+            rd = request.getRequestDispatcher("/createuser.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
