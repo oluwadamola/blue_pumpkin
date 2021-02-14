@@ -24,7 +24,8 @@ import javax.persistence.Table;
 @Table(name="users")
 @NamedQueries({
         @NamedQuery(name = "User.all", query="SELECT u FROM User u"),
-        @NamedQuery(name ="User.findByEmail", query="SELECT u from User u where u.email = :email ")
+        @NamedQuery(name ="User.findByEmail", query="SELECT u from User u where u.email = :email "),
+        @NamedQuery(name ="User.delete", query="DELETE FROM User u where u.userId =:userId")
 })
 public class User implements Serializable {
     @Id
@@ -39,6 +40,8 @@ public class User implements Serializable {
     @Column(nullable = false, length = 11)
     private String phoneNumber;
     private String password;
+    @Column(nullable = false, length = 150)
+    private String address;
 
     public User(){}
 
@@ -46,16 +49,17 @@ public class User implements Serializable {
         this.userId = userId;
     }
     
-    public User(int userId, String firstName, String lastName, String email, String phoneNumber, String password) {
-         this(firstName, lastName, email, phoneNumber, password);
+    public User(int userId, String firstName, String lastName, String email, String phoneNumber, String password, String address) {
+         this(firstName, lastName, email, phoneNumber, password, address);
          this.userId = userId;
     }
-    public User(String firstName, String lastName, String email, String phoneNumber, String password) {
+    public User(String firstName, String lastName, String email, String phoneNumber, String password, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.address = address;
     }
 
     public int getUserId() {
@@ -105,6 +109,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
     
 }

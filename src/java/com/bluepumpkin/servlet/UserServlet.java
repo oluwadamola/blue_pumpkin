@@ -39,6 +39,9 @@ public class UserServlet extends HttpServlet {
             case "/UserServlet/delete":
                 deleteUser(request, response);
                 break;
+            case "/UserServlet/edit":
+                showEditForm(request, response);
+                break;
             default:
                 listUser(request, response);
                 break;
@@ -47,18 +50,18 @@ public class UserServlet extends HttpServlet {
 
     private void listUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         users = userdao.getUsers();
+        rd = request.getRequestDispatcher("/userlist.jsp");
         request.setAttribute("users", users);
         request.setAttribute("usercount", users.size());
-        rd = request.getRequestDispatcher("userlist.jsp");
         rd.forward(request, response);
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, ServletException, IOException {
         int userId = Integer.parseInt(request.getParameter("userId"));
+        user = new User();
         user = userdao.getUser(userId);
         userdao.deleteUser(user);
-        request.setAttribute("users", users);
-        request.getRequestDispatcher("userlist.jsp").forward(request, response);
+        listUser(request, response);
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,10 +70,10 @@ public class UserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String phoneNumber = request.getParameter("phoneNumber");
-        user = new User(firstName, lastName, email, phoneNumber, password);
+        String address = request.getParameter("address");
+        user = new User(firstName, lastName, email, phoneNumber, password, address);
         userdao.updateUser(user);
-        request.setAttribute("users", users);
-        request.getRequestDispatcher("/userlist.jsp").forward(request, response);
+        listUser(request, response);
     }
 
     private void insertUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -79,14 +82,12 @@ public class UserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String phoneNumber = request.getParameter("phoneNumber"); 
-        user = new User(firstName, lastName, email, phoneNumber, password);
+        String address = request.getParameter("address");
+        user = new User(firstName, lastName, email, phoneNumber, password, address);
         if(userdao.getUserByEmail(email) == null){
             userdao.addUser(user);
             users = userdao.getUsers();
-            rd = request.getRequestDispatcher("/userlist.jsp");
-            request.setAttribute("users", users);
-            request.setAttribute("usercount", users.size());
-            rd.forward(request, response);
+            listUser(request, response);
         }
         else{
             request.setAttribute("email_taken", "Email is already taken");
@@ -94,7 +95,13 @@ public class UserServlet extends HttpServlet {
             rd.forward(request, response);
         }
     }
-
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+         RequestDispatcher dispatcher = request.getRequestDispatcher("/edituser.jsp");
+         int userId = Integer.parseInt(request.getParameter("userId"));
+         user = userdao.getUser(userId);
+         request.setAttribute("user", user);
+         dispatcher.forward(request, response);
+      }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -133,5 +140,4 @@ public class UserServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

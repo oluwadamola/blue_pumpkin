@@ -26,6 +26,10 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/UserServlet/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
         <url-pattern>/UserServlet/update</url-pattern>
     </servlet-mapping>
     <session-config>

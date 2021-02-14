@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -44,12 +45,14 @@ public class UserDao implements UserDaoLocal {
     }
     @Override
     public List<User> getUsers() {
-        return em.createNamedQuery("User.all").getResultList();
+        return em.createNamedQuery("User.all", User.class).getResultList();
     }
     @Override
     public void deleteUser(User user){
-        if(em.contains(user))
-            em.remove(user);
+       if(!em.contains(user)){
+           user = em.merge(user);
+       }
+       em.remove(user);
     }
     @Override
     public void updateUser(User user) {
