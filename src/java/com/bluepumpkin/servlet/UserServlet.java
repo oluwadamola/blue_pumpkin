@@ -42,6 +42,9 @@ public class UserServlet extends HttpServlet {
             case "/UserServlet/edit":
                 showEditForm(request, response);
                 break;
+            case "/UserServlet/new":
+                showNewForm(request,response);
+                break;
             default:
                 listUser(request, response);
                 break;
@@ -102,6 +105,10 @@ public class UserServlet extends HttpServlet {
          request.setAttribute("user", user);
          dispatcher.forward(request, response);
       }
+        private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        rd = request.getRequestDispatcher("/createuser.jsp");
+        rd.forward(request, response);
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -140,4 +147,5 @@ public class UserServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

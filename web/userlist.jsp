@@ -2,7 +2,6 @@
   <body class="app sidebar-mini rtl">
     <!-- Navbar-->
     <header class="app-header"><a class="app-header__logo" href="index.html">Blue BumpKin</a>
-      <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <!-- Navbar Right Menu-->
       <ul class="app-nav">
         <!-- User Menu-->
@@ -19,22 +18,15 @@
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
       <ul class="app-menu">
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Manage User</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-          <ul class="treeview-menu">
-            <li><a class="treeview-item" href="createuser.jsp"><i class="icon fa fa-user"></i> Create User</a></li>
-            <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-users"></i> List Users</a></li>
-            <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-th-list"></i> Create Events</a></li>
-            <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-th-list"></i> List Events</a></li>
-          </ul>
-        </li>
+
       </ul>
     </aside>     
       <main class="app-content">
       <div class="app-title">
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active"><a href="#">Simple Tables</a></li>
+          <li class="breadcrumb-item">User</li>
+          <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/createuser.jsp">New User</a></li>
         </ul>
       </div>
         <div class="col-md-12">
