@@ -21,7 +21,7 @@
         <li><a class="app-menu__item active" href="index.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Manage User</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="createuser.jsp"><i class="icon fa fa-user"></i> Create User</a></li>
+            <li><a class="treeview-item" href="UserServlet/new"><i class="icon fa fa-user"></i> Create User</a></li>
             <li><a class="treeview-item" href="UserServlet/list"><i class="icon fa fa-users"></i> List Users</a></li>
             <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-th-list"></i> Create Events</a></li>
             <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-th-list"></i> List Events</a></li>

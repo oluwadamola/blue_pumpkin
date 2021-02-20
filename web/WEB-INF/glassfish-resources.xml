@@ -10,5 +10,6 @@
         <property name="URL" value="jdbc:derby://localhost:1527/bluepumpkin"/>
         <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:app/jdbc/bluepumpkin" object-type="user" pool-name="derby_net_bluepumpkin_admin1Pool"/>
+    
+    <jdbc-resource enabled="true" jndi-name="java:app/jdbc/bluepumpkin" object-type="user" pool-name="derby_net_bluepumpkin_admin1Pool"/> 
 </resources>

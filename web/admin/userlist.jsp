@@ -1,4 +1,4 @@
-<%@include file="header.jsp" %>
+<%@include file="../header.jsp" %>
   <body class="app sidebar-mini rtl">
     <!-- Navbar-->
     <header class="app-header"><a class="app-header__logo" href="index.html">Blue BumpKin</a>
@@ -26,7 +26,7 @@
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item">User</li>
-          <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/createuser.jsp">New User</a></li>
+          <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/UserServlet/new">New User</a></li>
         </ul>
       </div>
         <div class="col-md-12">
@@ -61,5 +61,5 @@
         </div>
        </main>
     </body>
-<%@include file="header.jsp" %>
+ <%@include file="../footer.jsp" %>
     

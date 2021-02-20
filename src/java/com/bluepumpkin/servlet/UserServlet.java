@@ -7,8 +7,10 @@ package com.bluepumpkin.servlet;
 
 import com.bluepumpkin.dao.UserDaoLocal;
 import com.bluepumpkin.entity.User;
+import com.sun.faces.action.RequestMapping;
 import java.io.IOException;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author USER
  */
+
 public class UserServlet extends HttpServlet {
    @EJB
    UserDaoLocal userdao;
@@ -53,7 +56,7 @@ public class UserServlet extends HttpServlet {
 
     private void listUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         users = userdao.getUsers();
-        rd = request.getRequestDispatcher("/userlist.jsp");
+        rd = request.getRequestDispatcher("/admin/userlist.jsp");
         request.setAttribute("users", users);
         request.setAttribute("usercount", users.size());
         rd.forward(request, response);
@@ -94,19 +97,19 @@ public class UserServlet extends HttpServlet {
         }
         else{
             request.setAttribute("email_taken", "Email is already taken");
-            rd = request.getRequestDispatcher("/createuser.jsp");
+            rd = request.getRequestDispatcher("/admin/createuser.jsp");
             rd.forward(request, response);
         }
     }
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         RequestDispatcher dispatcher = request.getRequestDispatcher("/edituser.jsp");
+         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/edituser.jsp");
          int userId = Integer.parseInt(request.getParameter("userId"));
          user = userdao.getUser(userId);
          request.setAttribute("user", user);
          dispatcher.forward(request, response);
       }
-        private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        rd = request.getRequestDispatcher("/createuser.jsp");
+    private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        rd = request.getRequestDispatcher("/admin/createuser.jsp");
         rd.forward(request, response);
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
