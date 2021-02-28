@@ -5,12 +5,12 @@
  */
 package com.bluepumpkin.servlet;
 
+import com.bluepumpkin.dao.EventDaoLocal;
 import com.bluepumpkin.dao.UserDaoLocal;
+import com.bluepumpkin.entity.Event;
 import com.bluepumpkin.entity.User;
-import com.sun.faces.action.RequestMapping;
 import java.io.IOException;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,9 +26,13 @@ import javax.servlet.http.HttpServletResponse;
 public class UserServlet extends HttpServlet {
    @EJB
    UserDaoLocal userdao;
+   @EJB
+   EventDaoLocal eventdao;
+   
    RequestDispatcher rd;
    User user;
    List<User> users;
+   List<Event> events;
    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getServletPath();    
@@ -57,7 +61,7 @@ public class UserServlet extends HttpServlet {
     private void listUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         users = userdao.getUsers();
         rd = request.getRequestDispatcher("/admin/userlist.jsp");
-        request.setAttribute("users", users);
+        request.setAttribute("users", users);       
         request.setAttribute("usercount", users.size());
         rd.forward(request, response);
     }

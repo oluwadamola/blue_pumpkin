@@ -56,6 +56,7 @@ public class UserDao implements UserDaoLocal {
     }
     @Override
     public void updateUser(User user) {
+        
         em.merge(user);
     }
    

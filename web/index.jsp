@@ -1,6 +1,6 @@
 <%@include file="header.jsp" %>
     <!-- Navbar-->
-    <header class="app-header"><a class="app-header__logo" href="index.html">Blue BumpKin</a>
+    <header class="app-header"><a class="app-header__logo" href="${pageContext.request.contextPath}/index">Blue BumpKin</a>
       <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <!-- Navbar Right Menu-->
       <ul class="app-nav">
@@ -23,8 +23,8 @@
           <ul class="treeview-menu">
             <li><a class="treeview-item" href="UserServlet/new"><i class="icon fa fa-user"></i> Create User</a></li>
             <li><a class="treeview-item" href="UserServlet/list"><i class="icon fa fa-users"></i> List Users</a></li>
-            <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-th-list"></i> Create Events</a></li>
-            <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-th-list"></i> List Events</a></li>
+            <li><a class="treeview-item" href="EventServlet/new"><i class="icon fa fa-th-list"></i> Create Events</a></li>
+            <li><a class="treeview-item" href="EventServlet/list"><i class="icon fa fa-th-list"></i> List Events</a></li>
           </ul>
         </li>
       </ul>
@@ -36,7 +36,7 @@
           <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
             <div class="info">
               <h4>Games</h4>
-              <p><b>0</b></p>
+              <p><b>${gamecount}</b></p>
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@
           <div class="widget-small info coloured-icon"><i class="icon fa fa-users fa-3x"></i>
             <div class="info">
               <h4>Meeting</h4>
-              <p><b>0</b></p>
+              <p><b>${meetingcount}</b></p>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
           <div class="widget-small info coloured-icon"><i class="icon fa fa-star fa-3x"></i>
             <div class="info">
               <h4>Competition</h4>
-              <p><b>0</b></p>
+              <p><b>${competitioncount}</b></p>
             </div>
           </div>
         </div>
@@ -60,17 +60,15 @@
       <div class="row">
         <div class="col-md-6">
           <div class="tile">
-            <h3 class="tile-title">Monthly Sales</h3>
+            <h3 class="tile-title">Games</h3>
             <div class="embed-responsive embed-responsive-16by9">
-              <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
             </div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="tile">
-            <h3 class="tile-title">Support Requests</h3>
+            <h3 class="tile-title">Meeting</h3>
             <div class="embed-responsive embed-responsive-16by9">
-              <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
             </div>
           </div>
         </div>
@@ -105,4 +103,4 @@
         </div>
       </div>
     </main>
-  <%@include file="footer.jsp" %>
+<%@include file="footer.jsp" %>

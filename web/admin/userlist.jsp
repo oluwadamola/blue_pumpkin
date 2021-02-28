@@ -1,7 +1,7 @@
 <%@include file="../header.jsp" %>
   <body class="app sidebar-mini rtl">
     <!-- Navbar-->
-    <header class="app-header"><a class="app-header__logo" href="index.html">Blue BumpKin</a>
+    <header class="app-header"><a class="app-header__logo" href="${pageContext.request.contextPath}/index">Blue BumpKin</a>
       <!-- Navbar Right Menu-->
       <ul class="app-nav">
         <!-- User Menu-->
@@ -38,7 +38,7 @@
                   <th>#</th>
                   <th>First Name</th>
                   <th>Last Name</th>
-                  <th>Username</th>
+                  <th>Email</th>
                 </tr>
               </thead>
               <tbody>                 
