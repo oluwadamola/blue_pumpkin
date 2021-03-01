@@ -19,15 +19,15 @@
         <h1>Bule Pumpkin</h1>
       </div>
       <div class="login-box">
-          <form class="login-form" method="post" action="${pageContext.request.contextPath}/AuthenticateServlet/login">
+          <form class="login-form" method="POST" action="j_security_check">
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
           <div class="form-group">
-            <label class="control-label">Email</label>
-            <input class="form-control" type="email" name="email" placeholder="Email" autofocus>
+            <label class="control-label">USERNAME</label>
+            <input class="form-control" type="text" name="j_username" placeholder="Email" autofocus>
           </div>
           <div class="form-group">
             <label class="control-label">PASSWORD</label>
-            <input class="form-control" type="password" name="password" placeholder="Password">
+            <input class="form-control" type="password" name="j_password" placeholder="Password">
           </div>
           <div class="form-group">
             <div class="utility">

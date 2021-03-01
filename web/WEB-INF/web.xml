@@ -17,12 +17,16 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>EventServlet</servlet-name>   
+        <servlet-name>EventServlet</servlet-name>
         <servlet-class>com.bluepumpkin.servlet.EventServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageServlet</servlet-name>
         <servlet-class>com.bluepumpkin.servlet.ManageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AuthenticateServlet</servlet-name>
+        <servlet-class>com.bluepumpkin.servlet.AuthenticateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
@@ -84,13 +88,18 @@
         <servlet-name>ManageServlet</servlet-name>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuthenticateServlet</servlet-name>
+        <url-pattern>/AuthenticateServlet/login</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index</welcome-file>
+            <welcome-file>login.jsp</welcome-file>
+<!--        <welcome-file>index</welcome-file>-->
     </welcome-file-list>
     <security-constraint>
         <display-name>AdminConstraint</display-name>
@@ -109,7 +118,7 @@
         <auth-method>FORM</auth-method>
         <realm-name>file</realm-name>
         <form-login-config>
-            <form-login-page>/login.jsp</form-login-page>
+            <form-login-page>/admin/adminlogin.jsp</form-login-page>
             <form-error-page>/error.jsp</form-error-page>
         </form-login-config>
     </login-config>
