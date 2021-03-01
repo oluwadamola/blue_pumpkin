@@ -5,11 +5,15 @@
  */
 package com.bluepumpkin.servlet;
 
+import com.bluepumpkin.dao.EventDaoLocal;
 import com.bluepumpkin.dao.UserDaoLocal;
 import com.bluepumpkin.entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.inject.Inject;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,12 +28,12 @@ import javax.servlet.http.HttpSession;
 public class AuthenticateServlet extends HttpServlet {
     @EJB
     UserDaoLocal userdao;
-    
+    @EJB
+    EventDaoLocal eventdao;
+        
     User user;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //ServletContext sc = getServletContext();
-        //sc.getContextPath();
         String action = request.getServletPath();
         switch(action){
             case "/AuthenticateServlet/login":
@@ -46,7 +50,6 @@ public class AuthenticateServlet extends HttpServlet {
         session.invalidate();
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
-
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");       
@@ -54,7 +57,14 @@ public class AuthenticateServlet extends HttpServlet {
         HttpSession session = request.getSession();
         if(user.getEmail().equalsIgnoreCase(email) && user.getPassword().equalsIgnoreCase(password)){
             session.setAttribute("usersession", user.getEmail());
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            int gamecount = eventdao.getAllEventByName("Games").size();
+            int meetingcount = eventdao.getAllEventByName("Meeting").size();
+            int competitioncount = eventdao.getAllEventByName("Competition").size();
+            request.setAttribute("gamecount", gamecount);
+            request.setAttribute("meetingcount", meetingcount);
+            request.setAttribute("competitioncount", competitioncount);
+            RequestDispatcher rq= request.getRequestDispatcher("/index.jsp");
+            rq.forward(request,response);
         }
         else{
             request.getRequestDispatcher("/login.jsp").forward(request, response);           

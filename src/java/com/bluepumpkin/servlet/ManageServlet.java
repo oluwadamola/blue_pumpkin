@@ -27,14 +27,18 @@ public class ManageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-             int gamecount = eventdao.getAllEventByName("Games").size();
-             int meetingcount = eventdao.getAllEventByName("Meeting").size();
-             int competitioncount = eventdao.getAllEventByName("Competition").size();
-             request.setAttribute("gamecount", gamecount);
-             request.setAttribute("meetingcount", meetingcount);
-             request.setAttribute("competitioncount", competitioncount);
-             RequestDispatcher view= request.getRequestDispatcher("index.jsp");
-             view.forward(request,response);
+             getAllEvents(request, response);
+    }
+
+    public void getAllEvents(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int gamecount = eventdao.getAllEventByName("Games").size();
+        int meetingcount = eventdao.getAllEventByName("Meeting").size();
+        int competitioncount = eventdao.getAllEventByName("Competition").size();
+        request.setAttribute("gamecount", gamecount);
+        request.setAttribute("meetingcount", meetingcount);
+        request.setAttribute("competitioncount", competitioncount);
+        RequestDispatcher view= request.getRequestDispatcher("index.jsp");
+        view.forward(request,response);
     }
 
 }
